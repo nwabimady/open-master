@@ -18,6 +18,57 @@
     </aside>
     
     <main id="content">
+        <dialog id="new-project-model">
+            <form>
+                <h2>New Project</h2>
+                    <div class="input-list">
+                    <div class="form-field-container">
+                        <label for="name"><span class="material-symbols-rounded">
+                            apartment
+                            </span>Name</label>
+                        <input type="text" placeholder="Project Name..." required />
+                        <label><em>Tip: Keep it short...</em></label>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">
+                            view_headline
+                            </span>Description</label>
+                        <textarea cols="30" rows="5" placeholder="Give your description of the project. Don't get craxy or complicated - other people have to read this..."></textarea>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">
+                            person
+                            </span>Role</label>
+                        <select>
+                            <option>Architect</option>
+                            <option>Engineer</option>
+                            <option>Developer</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">
+                            progress_activity
+                            </span>Status</label>
+                        <select>
+                            <option>Active</option>
+                            <option>Pending</option>
+                            <option>Finished</option>
+                        </select>
+                    </div>
+                    <div class="form-field-container">
+                        <label><span class="material-symbols-rounded">
+                            done
+                            </span>Finish date</label>
+                            <input type="date" value="yyyy-mm-dd" />
+                    </div>
+                </div>
+                <div>
+                    <button>Cancel</button>
+                    <button>Accept</button>
+                </div>
+            </form>
+        </dialog>       
+        
         <header id="page-header">
             <h2> Projects </h2>
             <div>
