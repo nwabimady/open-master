@@ -124,7 +124,7 @@ button:hover {
     transition: var(--transition-hover);
 }
 #projects-list {
-    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     display: grid;
     flex-wrap: wrap;
     gap: 20px;
