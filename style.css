@@ -23,7 +23,6 @@
     --font-xl: 18px;
     --font-2xl: 20px;
     --font-3xl: 22px;
-
     --transition-hover:0.025s ;
 }
 
@@ -38,6 +37,12 @@ body {
 
 #company-logo {
     height: 65px;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /*Sidebar styles*/
@@ -234,4 +239,19 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
     outline: 2px solid var(--primary);
+}
+
+.dashboard-card {
+    background-color: var(--background-100);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+#project-details > .main-page-content {
+    display: grid;
+    padding: 20px 40px;
+    gap: 30px;
+    grid-template-columns: 475px 1fr;
+    height: 100%;
 }
