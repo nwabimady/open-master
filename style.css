@@ -328,6 +328,6 @@ input:focus, textarea:focus, select:focus {
     text-align: center; 
     justify-content: center;
     width: 125px;
-    height: 75px; 
+    aspect-ratio: 1; 
     border-radius: 100px;
  }
