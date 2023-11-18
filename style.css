@@ -24,7 +24,7 @@
     --font-xl: 18px;
     --font-2xl: 20px;
     --font-3xl: 22px;
-    --transition-hover:0.025s ;
+    --transition-hover:0.03s ;
 }
 
 body {
@@ -289,10 +289,16 @@ input:focus, textarea:focus, select:focus {
     background-color: var(--background-200);
     border-radius: 10px;
     cursor: pointer;
-    flex-grow: 1;
     }
 
 .todo-item:hover {
     background-color: var(--primary);
     transition: var(--transition-hover);
 }
+
+.user-item {
+    padding: 20px;
+    background-color: var(--background-200);
+    border-radius: 10px;
+    cursor: pointer;
+    }
