@@ -248,6 +248,7 @@ input:focus, textarea:focus, select:focus {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 #project-details > .main-page-content {
@@ -258,10 +259,17 @@ input:focus, textarea:focus, select:focus {
     height: 100%;
 }
 
+#project-users > .main-page-content {
+    display: grid;
+    padding: 20px 40px;
+    gap: 30px;
+    grid-template-columns: 475px 1fr;
+    height: 100%;
+}
+
 .btn-secondary {
     background-color: transparent;
     outline: 2px solid var(--background-card-propery);
-    width: 100px;
     text-align: center;
     ;
 }
