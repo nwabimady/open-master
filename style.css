@@ -129,7 +129,8 @@ button {
 }
 
 button:hover {
-    background-color: var(--primary-400);
+    outline: var(--font) solid 2px;
+    outline-offset: 5px;
     transition: var(--transition-hover);
 }
 #projects-list {

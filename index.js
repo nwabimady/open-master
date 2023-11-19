@@ -1,7 +1,13 @@
-function showModal() {
-  const modal = document.getElementById("new-project-model");
+function showModal(id) {
+  const modal = document.getElementById(id);
   modal.showModal();
 }
 
-const newProjectsBtn = document.getElementById("new-project-model").showModal();
-newProjectsBtn.addEventListener("onclick", showModal);
+const newProjectBtn = document.getElementById("new-project-btn");
+if (newProjectBtn) {
+  newProjectBtn.addEventListener("click", () => {
+    showModal("new-project-model");
+  });
+} else {
+  console.warn("New project button was not found.");
+}
