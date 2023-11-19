@@ -20,27 +20,27 @@
     <main id="content"> 
         <div class="page" id="projects-page">
             <dialog id="new-project-model">
-                <form>
+                <form id="new-project-form">
                     <h2>New Project</h2>
                         <div class="input-list">
                         <div class="form-field-container">
                             <label for="name"><span class="material-symbols-rounded">
                                 apartment
                                 </span>Name</label>
-                            <input type="text" placeholder="Project Name..." required />
+                            <input name="name"  type="text" placeholder="Project Name..." required />
                             <label><em>Tip: Keep it short...</em></label>
                         </div>
-                        <div class="form-field-container">
+                        <div  class="form-field-container">
                             <label><span class="material-symbols-rounded">
                                 view_headline
                                 </span>Description</label>
-                            <textarea cols="30" rows="5" placeholder="Give your description of the project. Don't get craxy or complicated - other people have to read this..."></textarea>
+                            <textarea name="description" cols="30" rows="5" placeholder="Give your description of the project. Don't get craxy or complicated - other people have to read this..."></textarea>
                         </div>
                         <div class="form-field-container">
                             <label><span class="material-symbols-rounded">
                                 person
                                 </span>Role</label>
-                            <select>
+                            <select name="userRole">
                                 <option>Architect</option>
                                 <option>Engineer</option>
                                 <option>Developer</option>
@@ -50,17 +50,17 @@
                             <label><span class="material-symbols-rounded">
                                 progress_activity
                                 </span>Status</label>
-                            <select>
+                            <select name="status">
                                 <option>Active</option>
                                 <option>Pending</option>
                                 <option>Finished</option>
                             </select>
                         </div>
                         <div class="form-field-container">
-                            <label><span class="material-symbols-rounded">
+                            <label for="finishDate"><span class="material-symbols-rounded">
                                 done
                                 </span>Finish date</label>
-                                <input type="date" value="yyyy-mm-dd" />
+                                <input name="finishDate" type="date" value="yyyy-mm-dd" />
                         </div>
                     </div>
                     <div style="display: flex; justify-content:end; column-gap: 20px; padding: 0 20px 20px 20px;">
@@ -215,7 +215,7 @@
                             <div style="flex-grow: 1; display: flex; align-items:center;">
                                 <div style="display: flex; align-items:center;">
                                     <span class="material-symbols-rounded">search</span>
-                                    <input type="text" placeholder="Search to-do list by..." style="width: auto;">
+                                    <input  type="text" placeholder="Search to-do list by..." style="width: auto;">
                                 </div>
                                 <span class="material-symbols-rounded">add</span>
                             </div>
