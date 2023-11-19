@@ -115,6 +115,7 @@ h5 {
 }
 
 button {
+    display: flex;
     padding: 8px 15px;
     cursor: pointer;
     height: 40px;
@@ -123,6 +124,8 @@ button {
     color: var(--font);
     border-radius: 100px;
     border: none;
+    align-items: center; 
+    justify-content: space-between;
 }
 
 button:hover {
@@ -330,4 +333,4 @@ input:focus, textarea:focus, select:focus {
     width: 125px;
     aspect-ratio: 1; 
     border-radius: 100px;
- }
+}

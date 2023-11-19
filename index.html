@@ -17,8 +17,8 @@
         </ul>
     </aside>
     
-    <main id="content">
-        <div class="page" id="projects-page" style="display: none;">
+    <main id="content"> 
+        <div class="page" id="projects-page">
             <dialog id="new-project-model">
                 <form>
                     <h2>New Project</h2>
@@ -72,7 +72,9 @@
             <header id="page-header">
                 <h2> Projects </h2>
                 <div>
-                    <button>New Project</button>
+                    <button id="new-project-model"><span class="material-symbols-rounded">
+                        add
+                        </span>New Project</button>
                 </div>
             </header>
             <div id="projects-list">
@@ -235,7 +237,7 @@
         </div>
         </div>
 
-        <div class="page" id="project-users">
+        <div class="page" id="project-users" style="display: none;">
             <header>
                 <div class="main-page-content">
                     <h2>Users</h2>
@@ -361,5 +363,6 @@
 
     </main>
     </div>
+    <script src="./index.js"></script>
 </body>
 </html>

@@ -1,1 +1,12 @@
-document.getElementById("new-project-model").showModal();
+function showModal() => {
+    const modal = document.getElementById("new-project-model");
+    modal.showModal();
+  };
+
+const showModal = () => {
+  const modal = document.getElementById("new-project-model");
+  modal.showModal();
+};
+
+const newProjectsBtn = document.getElementById("new-project-model").showModal();
+newProjectsBtn.addEventListener("click", showModal);
