@@ -1,3 +1,5 @@
+import { Project } from "./class/Project";
+
 function showModal(id) {
   const modal = document.getElementById(id);
   modal.showModal();
@@ -29,7 +31,8 @@ if (projectForm) {
       status: formData.get ("status"),
       finishDate: formData.get ("finishDate"),
     };
-      console.log(project);
+      const myProject = new Project(formData.get("name"))
+      console.log(myProject)
   });
 } else {
   console.warn("The project form was not found. Check ID.");
