@@ -22,17 +22,14 @@ if (projectForm) {
   projectForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(projectForm);
-    let fieldMap = {
-      name: "Name",
-      description: "Description",
-      userRole: "User Role",
-      status: "Status",
-      finishDate: "Finish Date",
+    const project = {
+      name: formData.get ("name"),
+      description: formData.get ("description"),
+      userRole: formData.get ("userRole"),
+      status: formData.get ("status"),
+      finishDate: formData.get ("finishDate"),
     };
-
-    for (let field in fieldMap) {
-      console.log(`${fieldMap[field]}:`, formData.get(field));
-    }
+      console.log(project);
   });
 } else {
   console.warn("The project form was not found. Check ID.");
