@@ -39,6 +39,21 @@ export class ProjectsManager {
     this.list = remaining
 }
 
+    getProjectByName(name: string) {
+        const project = this.list.find((project) => {
+            return project.name === name;
+    })
+        return project;
+    }
+
+    getTotalCost() {
+        const totalCost:number = this.list.reduce(
+            (sumOfCost, currentProject) => sumOfCost + currentProject.cost,
+            0
+        );
+        return totalCost;
+    }
+
     exportToJSON() {}
 
     importFromJSON() {};
