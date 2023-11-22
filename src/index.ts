@@ -1,19 +1,14 @@
 import { IProject, ProjectStatus, UserRole } from "./class/Project";
 import { ProjectsManager } from "./class/ProjectsManager";
 
-function showModal(id: string) {
+function toggleModal(id: string) {
   const modal = document.getElementById(id);
   if (modal && modal instanceof HTMLDialogElement) {
-    modal.showModal();
-  } else {
-    console.warn("The provided modal hasn't found .ID:.");
-  }
-}
-
-function closeModal(id: string) {
-  const modal = document.getElementById(id);
-  if (modal && modal instanceof HTMLDialogElement) {
-    modal.close();
+    if (modal.open) {
+      modal.close();
+    } else {
+      modal.showModal();
+    }
   } else {
     console.warn("The provided modal hasn't found .ID:.");
   }
@@ -25,7 +20,7 @@ const projectsManager = new ProjectsManager(projectsListUI)
 const newProjectBtn = document.getElementById("new-project-btn");
 if (newProjectBtn) {
   newProjectBtn.addEventListener("click", () => {
-    showModal("new-project-model");
+    toggleModal("new-project-model");
   });
 } else {
   console.warn("New project button was not found.");
@@ -43,9 +38,20 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
       status: formData.get ("status") as ProjectStatus,
       finishDate: new Date (formData.get("finishDate") as string),
     };
-      const project = projectsManager.newProject(projectData)
-      projectForm.reset()
+    const project = projectsManager.newProject(projectData)
+    projectForm.reset();
+    toggleModal("new-project-model"); // Close the modal after form submission
   });
 } else {
   console.warn("The project form was not found. Check ID.");
+}
+
+// Get the cancel button
+const cancelButton = document.querySelector(".btn-secondary[type='button']");
+if (cancelButton) {
+  cancelButton.addEventListener("click", () => {
+    toggleModal("new-project-model");
+  });
+} else {
+  console.warn("Cancel button was not found.");
 }

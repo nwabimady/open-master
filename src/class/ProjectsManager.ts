@@ -6,6 +6,13 @@ export class ProjectsManager {
 
     constructor(container: HTMLElement) {
         this.ui = container
+        this.newProject({
+            name: "Default Project",
+            description: "Default app project",
+            status: "pending",
+            userRole: "architect",
+            finishDate: new Date()
+        })
     }
 
     newProject(data: IProject) {
@@ -14,4 +21,25 @@ export class ProjectsManager {
         this.list.push(project)
         return project
     }
+
+    getProject(id: string) {
+        const project = this.list.find((project) => {
+            return project.id === id
+        })
+        return project
+    }
+
+    deleteProject(id: string) {
+        const project = this.getProject(id)
+        if (!project) {return}
+        project.ui.remove()         
+        const remaining = this.list.filter((project) => {
+        return project.id !== id
+    })
+    this.list = remaining
+}
+
+    exportToJSON() {}
+
+    importFromJSON() {};
 }
