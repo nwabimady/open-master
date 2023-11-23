@@ -34,6 +34,7 @@ body {
     height: 100vh;
     background-color: var(--background);
     color: var(--font);
+    z-index: 0;
 }
 
 #company-logo {
@@ -194,6 +195,7 @@ dialog {
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur (3px);
+    
 }
 
 /* Form styles */
@@ -335,3 +337,28 @@ input:focus, textarea:focus, select:focus {
     aspect-ratio: 1; 
     border-radius: 100px;
 }
+
+#custom-alert {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+    padding: 75px;
+    background-color: var(--background-200);
+    border-radius: 10px;
+    color: white;
+    
+  }
+
+  #custom-alert h2 {
+    margin-bottom: 20px; /* Adjust this value to increase or decrease the gap */
+  }
+  
+  #custom-alert button {
+    display: flex;
+    justify-content: end;
+  }
+  
+  

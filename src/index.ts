@@ -38,10 +38,25 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
       status: formData.get ("status") as ProjectStatus,
       finishDate: new Date (formData.get("finishDate") as string),
     };
-    const project = projectsManager.newProject(projectData)
-    projectForm.reset();
-    toggleModal("new-project-model"); // Close the modal after form submission
-  });
+
+try {
+  const project = projectsManager.newProject(projectData)
+  projectForm.reset();
+  toggleModal("new-project-model"); // Close the modal after form submission
+} catch (error) {
+  const alertBox = document.getElementById('custom-alert');
+  const alertMessage = document.getElementById('alert-message');
+  const closeButton = document.getElementById('close-alert');
+  if (alertBox && alertMessage && closeButton) {
+    alertMessage.innerText = error;
+    alertBox.style.display = 'block';
+    closeButton.onclick = function() {
+      alertBox.style.display = 'none';
+    }
+  }
+}
+
+});
 } else {
   console.warn("The project form was not found. Check ID.");
 }
