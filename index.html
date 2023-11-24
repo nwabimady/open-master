@@ -70,10 +70,10 @@
             </dialog>       
             <header id="page-header">
                 <h2> Projects </h2>
-                <div>
-                    <button id="new-project-btn"><span class="material-symbols-rounded">
-                        add
-                        </span>New Project</button>
+                <div style="display:flex; align-items: center; column-gap: 15px;">
+                    <button class="btn-secondary"><span id="import-projects-btn" class="material-symbols-rounded action-icon">file_upload</span></button>
+                    <button class="btn-secondary"><span id="export-projects-btn" class="material-symbols-rounded action-icon">file_download</span></button>
+                    <button id="new-project-btn"><span class="material-symbols-rounded">add</span>New Project</button>
                 </div>
             </header>
             <div id="projects-list">
@@ -270,7 +270,7 @@
 
     <script type="module"  src="./src/index.ts"></script>
 </body>
-<dialog id="custom-alert">
+<dialog id="error-container">
     <h2 id="alert-message"></h2>
     <button id="close-alert" class="btn-secondary">Close</button>
 </dialog>

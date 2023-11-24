@@ -70,3 +70,17 @@ if (cancelButton) {
 } else {
   console.warn("Cancel button was not found.");
 }
+
+const exportProjectBtn = document.getElementById("export-projects-btn")
+if (exportProjectBtn) {
+  exportProjectBtn.addEventListener("click", () => {
+    projectsManager.exportToJSON()
+})
+}
+
+const importProjectBtn = document.getElementById("import-projects-btn")
+if (importProjectBtn) {
+  importProjectBtn.addEventListener("click", () => {
+    projectsManager.importFromJSON()
+  })
+}
