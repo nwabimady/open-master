@@ -38,12 +38,19 @@ export class ProjectsManager {
         return project
     }
 
-private setDetailsPage(project: Project) {
-    const detailsPage = document.getElementById("project-details")
-    if (!detailsPage) {return}
-    const name = detailsPage.querySelector("[data-project-info='name']")
-    if(name) {name.textContent = project.name}
-}
+    private setDetailsPage(project: Project) {
+        const detailsPage = document.getElementById("project-details")
+        if (!detailsPage) {return}
+    
+        const properties = ['name', 'description', 'status', 'role', 'cost', 'finish date']
+    
+        for (let property of properties) {
+            const elements = detailsPage.querySelectorAll(`[data-project-info='${property}']`)
+            elements.forEach(element => {
+                element.textContent = project[property]
+            })
+        }
+    }
 
     getProject(id: string) {
         const project = this.list.find((project) => {
