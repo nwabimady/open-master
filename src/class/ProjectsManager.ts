@@ -14,8 +14,7 @@ export class ProjectsManager {
             userRole: "architect",
             finishDate: new Date()
         })
-    }
-
+            }
     newProject(data: IProject) {
         const projectNames = this.list.map((project) => {
             return project.name
@@ -24,18 +23,27 @@ export class ProjectsManager {
         if (nameInUse) {
             throw new Error(`Tisk tisk, A project with the name "${data.name}" already exists`)
         }
+        //
         const project = new Project(data)
         project.ui.addEventListener("click", () => {
             const projectsPage = document.getElementById("projects-page")
-            const detailsPage = document.getElementById("project-details")
-            if (!projectsPage || !detailsPage) { return }
+            const detailsPage = document.getElementById("project-details") 
+            if ( !projectsPage || !detailsPage) { return }
             projectsPage.style.display = "none"
             detailsPage.style.display = "flex"
+            this.setDetailsPage(project)
         })
         this.ui.append(project.ui)
         this.list.push(project)
         return project
     }
+
+private setDetailsPage(project: Project) {
+    const detailsPage = document.getElementById("project-details")
+    if (!detailsPage) {return}
+    const name = detailsPage.querySelector("[data-project-info='name']")
+    if(name) {name.textContent = project.name}
+}
 
     getProject(id: string) {
         const project = this.list.find((project) => {

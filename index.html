@@ -10,11 +10,11 @@
 <body>
     <aside id="sidebar">
         <img id="company-logo" src="./assets/company-logo.svg"  alt="Construction company">
-        <ul id="nav-buttons">
-        <li><span class="material-symbols-rounded">location_city</span>Projects</li>
-        <li><span class="material-symbols-rounded">group</span>Users</li>
-        <li><span class="material-symbols-rounded">description</span>Documentation</li>
-        </ul>
+        <div id="nav-buttons">
+            <div id="projects-page-btn"><span class="material-symbols-rounded">location_city</span>Projects</div>
+            <div><span class="material-symbols-rounded">group</span>Users</div>
+            <div><span class="material-symbols-rounded">description</span>Documentation</div>
+        </div>
     </aside>
     <main id="content"> 
         <div class="page" id="projects-page">
@@ -85,7 +85,7 @@
         <div class="page" id="project-details" style="display: none;">
             <header>
                 <div>
-                    <h2>Hospital Centre</h2>
+                    <h2 data-project-info="name">Hospital Centre</h2>
                     <p style="color: #969696;">Community Hospital location</p>
                 </div>
             </header>
@@ -98,14 +98,14 @@
                         </div>
                         <div style="padding: 0 30px;">
                             <div>
-                                <h5>Hospital Centre</h5>
-                                <p>Community hospital located downtown.</p>
+                                <h5 data-project-info="name">Hospital Centre</h5>
+                                <p data-project-info="description">Community hospital located downtown.</p>
                             </div>
                             <div style="display: flex; flex-direction: row; column-gap:30px; padding: 10px;"> 
-                                    <div><p style="color: #969696;">Status:</p><p>Active</p></div>
-                                    <div><p style="color: #969696;">Role:</p><p>Engineer</p></div>
-                                    <div><p style="color: #969696;">Cost:</p><p>$2700000</p></div>
-                                    <div><p style="color: #969696;">Finish date</p><p>2025-10-17</p></div> 
+                                    <div><p data-project-info="status" style="color: #969696;">Status:</p><p>Active</p></div>
+                                    <div><p data-project-info="role" style="color: #969696;">Role:</p><p>Engineer</p></div>
+                                    <div><p data-project-info="cost" style="color: #969696;">Cost:</p><p>$2700000</p></div>
+                                    <div><p data-project-info="finish-date" style="color: #969696;">Finish date</p><p>2025-10-17</p></div> 
                             </div>
                             <div style="padding: 10px;">
                                 <div class="progress-bar">

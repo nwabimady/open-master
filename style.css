@@ -57,7 +57,7 @@ body {
     padding: 25px;
 }
 
-#sidebar li{
+#sidebar div{
     margin: 15px;
 }
 
@@ -69,7 +69,7 @@ span {
 
 }
 
-#nav-buttons li {
+#nav-buttons div {
  list-style-type: none;
  padding: 15px;
  border-radius: 10px;
@@ -80,7 +80,7 @@ span {
  column-gap: 10px;
 }
 
-#nav-buttons li:hover {
+#nav-buttons div:hover {
     background-color: var(--primary);
     transition: var(--transition-hover);
 }
