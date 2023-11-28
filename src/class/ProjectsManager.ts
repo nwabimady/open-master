@@ -42,15 +42,22 @@ export class ProjectsManager {
         const detailsPage = document.getElementById("project-details")
         if (!detailsPage) {return}
     
-        const properties = ['name', 'description', 'status', 'role', 'cost', 'finish date']
+        const properties = ['name', 'description', 'status', 'role', 'cost', 'finishDate']
     
         for (let property of properties) {
             const elements = detailsPage.querySelectorAll(`[data-project-info='${property}']`)
             elements.forEach(element => {
-                element.textContent = project[property]
+                if (property === 'finishDate') {
+                    // Format the date
+                    const date = new Date(project[property]);
+                    element.textContent = date.toLocaleDateString();
+                } else {
+                    element.textContent = project[property];
+                }
             })
         }
     }
+    
 
     getProject(id: string) {
         const project = this.list.find((project) => {
