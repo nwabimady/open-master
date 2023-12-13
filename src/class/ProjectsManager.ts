@@ -1,6 +1,7 @@
 import { getOutputFileNames } from "typescript"
 import { IProject, Project } from "./Project"
 
+
 export class ProjectsManager {
     list: Project[] = []
     ui: HTMLElement
@@ -23,7 +24,7 @@ export class ProjectsManager {
         if (nameInUse) {
             throw new Error(`Tisk tisk, A project with the name "${data.name}" already exists`)
         }
-        //
+        
         const project = new Project(data)
         project.ui.addEventListener("click", () => {
             const projectsPage = document.getElementById("projects-page")
@@ -33,16 +34,27 @@ export class ProjectsManager {
             detailsPage.style.display = "flex"
             this.setDetailsPage(project)
         })
+    
+        // Add event listener to "projects-page-btn"
+            const projectPageBtn = document.getElementById("projects-page-btn") as HTMLElement;
+            projectPageBtn.addEventListener("click", () => {
+            const projectsPage = document.getElementById("projects-page")
+            const detailsPage = document.getElementById("project-details")
+            if (!projectsPage || !detailsPage) { return; }
+            projectsPage.style.display = "flex";
+            detailsPage.style.display = "none";
+        });
+    
         this.ui.append(project.ui)
         this.list.push(project)
-        return project
+        return project        
     }
 
     private setDetailsPage(project: Project) {
         const detailsPage = document.getElementById("project-details")
         if (!detailsPage) {return}
     
-        const properties = ['name', 'description', 'status', 'role', 'cost', 'finishDate']
+        const properties = ['name', 'description', 'status', 'userRole', 'cost', 'finishDate']
     
         for (let property of properties) {
             const elements = detailsPage.querySelectorAll(`[data-project-info='${property}']`)
@@ -55,7 +67,7 @@ export class ProjectsManager {
                     element.textContent = project[property];
                 }
             })
-        }
+        }  
     }
     
 
@@ -126,4 +138,5 @@ export class ProjectsManager {
         })
         input.click()
     };
+    
 }
