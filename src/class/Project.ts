@@ -17,6 +17,7 @@ export class Project implements IProject {
     status: "pending" | "active" | "finished"
     userRole: "architect" | "engineer" | "developer"
     finishDate: Date
+    symbolIcon: string
 
     ui: HTMLDivElement
     cost: number = 0
@@ -27,6 +28,7 @@ export class Project implements IProject {
         for (const key in data) {
             this[key] = data[key]
         }
+        this.symbolIcon = this.name.slice(0, 2).toUpperCase();
         this.id = uuidv4()
         this.setUI()
     }
@@ -37,7 +39,7 @@ export class Project implements IProject {
         this.ui.className = "project-card"
         this.ui.innerHTML = ` 
             <div class="card-header">
-                <p style="background-color: blueviolet; padding: 10px; border-radius: 8px; aspect-ratio: -1;">HQ</p>
+                <p style="background-color: blueviolet; padding: 10px; border-radius: 8px; aspect-ratio: -1;">${this.symbolIcon}</p>
                 <div>
                     <h5>${this.name}</h5>
                     <p>${this.description}</p>
