@@ -37,9 +37,16 @@ export class Project implements IProject {
         if(this.ui) {return}
         this.ui = document.createElement("div")
         this.ui.className = "project-card"
+
+        // Define an array of colors
+        const colors = ["blueviolet", "green", "red", "purple", "orange", "dark blue"];
+
+        // Select a random color from the colors array
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
         this.ui.innerHTML = ` 
             <div class="card-header">
-                <p style="background-color: blueviolet; padding: 10px; border-radius: 8px; aspect-ratio: -1;">${this.symbolIcon}</p>
+                <p style="background-color: ${randomColor}; padding: 10px; border-radius: 8px; aspect-ratio: -1;">${this.symbolIcon}</p>
                 <div>
                     <h5>${this.name}</h5>
                     <p>${this.description}</p>
@@ -54,5 +61,5 @@ export class Project implements IProject {
             </ul>
             </div>
             `
-            }    
+    }
 }
