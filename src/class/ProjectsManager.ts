@@ -44,7 +44,10 @@ export class ProjectsManager {
             projectsPage.style.display = "flex";
             detailsPage.style.display = "none";
         });
-    
+        const projectIcon = document.getElementById("project-icon");
+        if (projectIcon) {
+            projectIcon.textContent = data.name.slice(0, 2).toUpperCase();
+        }
         this.ui.append(project.ui)
         this.list.push(project)
         return project        
@@ -54,7 +57,7 @@ export class ProjectsManager {
         const detailsPage = document.getElementById("project-details")
         if (!detailsPage) {return}
     
-        const properties = ['name', 'description', 'status', 'userRole', 'cost', 'finishDate']
+        const properties = ['name', 'description', 'status', 'userRole', 'cost', 'finishDate', 'symbolIcon']
     
         for (let property of properties) {
             const elements = detailsPage.querySelectorAll(`[data-project-info='${property}']`)
