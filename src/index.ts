@@ -36,7 +36,7 @@ if (projectForm && projectForm instanceof HTMLFormElement) {
       description: formData.get ("description") as string,
       userRole: formData.get ("userRole") as UserRole,
       status: formData.get ("status") as ProjectStatus,
-      finishDate: new Date (formData.get("finishDate") as string),
+      finishDate: formData.get("finishDate") ? new Date(formData.get("finishDate") as string) : new Date(),
     };
 
 try {

@@ -29,6 +29,13 @@ export class ProjectsManager {
             throw new Error(`Tisk tisk, A project with the name "${data.name}" already exists`)
         }
         
+        if (!data.finishDate) {
+            data.finishDate = new Date();
+        } else if (typeof data.finishDate === 'string') {
+            // If finishDate is a string, convert it to a Date object
+            data.finishDate = new Date(data.finishDate);
+        }
+
         const project = new Project(data)
         project.ui.addEventListener("click", () => {
             const projectsPage = document.getElementById("projects-page")
