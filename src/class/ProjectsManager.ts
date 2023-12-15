@@ -17,6 +17,10 @@ export class ProjectsManager {
         })
             }
     newProject(data: IProject) {
+        if (data.name.length < 5) {
+            throw new Error("Project name must be at least 5 characters long");
+        }
+    
         const projectNames = this.list.map((project) => {
             return project.name
         })
@@ -112,7 +116,7 @@ export class ProjectsManager {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        a.download = fileName 
+        a.download = fileName + ".json"
         a.click()
         URL.revokeObjectURL(url)
     }
