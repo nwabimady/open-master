@@ -26,27 +26,48 @@ if (newProjectBtn) {
   console.warn("New project button was not found.");
 }
 
-const projectForm = document.getElementById("new-project-form");
-if (projectForm && projectForm instanceof HTMLFormElement) {
+// Get the "Edit" button
+const editButton = document.getElementById("edit-button");
+if (editButton) {
+  editButton.addEventListener("click", () => {
+    // Get the current project
+    const project = projectsManager.getCurrentProject();
+
+    // Populate the form with the current project data
+    projectsManager.populateFormWithProjectData(project);
+
+    // Show the form
+    toggleModal("new-project-model");
+  });
+}
+
+const projectForm = document.getElementById("new-project-form") as HTMLFormElement;
+if (projectForm) {
   projectForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(projectForm);
     const projectData: IProject = {
-      name: formData.get ("name") as string,
-      description: formData.get ("description") as string,
-      userRole: formData.get ("userRole") as UserRole,
-      status: formData.get ("status") as ProjectStatus,
-      finishDate: formData.get("finishDate") ? new Date(formData.get("finishDate") as string) : new Date(),
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      userRole: formData.get("userRole") as UserRole,
+      status: formData.get("status") as ProjectStatus,
+      finishDate: formData.get("finishDate")
+        ? new Date(formData.get("finishDate") as string)
+        : new Date(),
     };
 
-try {
-  const project = projectsManager.newProject(projectData)
-  projectForm.reset();
-  toggleModal("new-project-model"); // Close the modal after form submission
-} catch (error) {
-  alert(error)
-}
-});
+    // Get the current project
+    const project = projectsManager.getCurrentProject();
+
+    // Update the project
+    project.updateProject(projectData);
+
+    // Update the UI with the updated project data
+    // ...
+
+    projectForm.reset();
+    toggleModal("new-project-model"); // Close the modal after form submission
+  });
 } else {
   console.warn("The project form was not found. Check ID.");
 }
@@ -65,7 +86,7 @@ const exportProjectBtn = document.getElementById("export-projects-btn")
 if (exportProjectBtn) {
   exportProjectBtn.addEventListener("click", () => {
     projectsManager.exportToJSON()
-})
+  })
 }
 
 const importProjectBtn = document.getElementById("import-projects-btn")

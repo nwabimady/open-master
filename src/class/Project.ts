@@ -62,4 +62,18 @@ export class Project implements IProject {
             </div>
             `
     }
+    update(data: any) {
+        for (const key in data) {
+            if (this.hasOwnProperty(key)) {
+                this[key] = data[key];
+            }
+        }
+    }
+
+    // Add the updateProject method
+    updateProject(updatedData: IProject) {
+        Object.assign(this, updatedData);
+        // Update the UI with the updated project data
+        // ...
+    }
 }
