@@ -8,13 +8,14 @@ export class ProjectsManager {
 
     constructor(container: HTMLElement) {
         this.ui = container
-        this.newProject({
+        const project = this.newProject({
             name: "Default Project",
             description: "Default app project",
             status: "pending",
             userRole: "architect",
             finishDate: new Date()
         })
+        project.ui.click()
             }
     newProject(data: IProject) {
         if (data.name.length < 5) {

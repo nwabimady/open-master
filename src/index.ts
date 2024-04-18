@@ -1,5 +1,7 @@
-import { IProject, ProjectStatus, UserRole } from "./class/Project";
-import { ProjectsManager } from "./class/ProjectsManager";
+import * as THREE from "three"
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
+import { IProject, ProjectStatus, UserRole } from "./classes/Project";
+import { ProjectsManager } from "./classes/ProjectsManager";
 
 function toggleModal(id: string) {
   const modal = document.getElementById(id);
@@ -96,3 +98,44 @@ if (importProjectBtn) {
   })
 }
 
+//ThreeJS Viewer
+const scene = new THREE.Scene()
+/* scene.background = new THREE.Color("#e8f4f8") */
+
+const viewerContainer = document.getElementById("viewer-container") as HTMLElement
+
+const camera = new THREE.PerspectiveCamera(75)
+camera.position.z = 5
+
+const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true})
+viewerContainer.append(renderer.domElement)
+
+function resizeViewer() {
+  const containerDimensions = viewerContainer.getBoundingClientRect()
+  renderer.setSize(containerDimensions.width , containerDimensions.height)
+  const aspectRatio = containerDimensions.width / containerDimensions.height
+  camera.aspect = aspectRatio
+  camera.updateProjectionMatrix()
+}
+
+window.addEventListener("resize", resizeViewer)
+
+resizeViewer();
+
+const boxGeometry = new THREE.BoxGeometry();
+const material = new THREE.MeshStandardMaterial()
+const cube = new THREE.Mesh(boxGeometry, material)
+
+const directionalLight = new THREE.DirectionalLight()
+const ambientLight = new THREE.AmbientLight()
+ambientLight.intensity = 0.4
+
+scene.add(cube, directionalLight, ambientLight)
+
+const cameraControls = new OrbitControls(camera, viewerContainer) 
+
+function renderScene() {
+  renderer.render(scene, camera)
+  requestAnimationFrame(renderScene)
+}
+renderScene();
