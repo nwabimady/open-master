@@ -5,6 +5,7 @@ import { IProject, ProjectStatus, UserRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
+import * as OBC from "openbim-components";
 
 function toggleModal(id: string) {
   const modal = document.getElementById(id);
@@ -102,10 +103,10 @@ if (importProjectBtn) {
 }
 
 //ThreeJS Viewer
-const scene = new THREE.Scene()
+/* const scene = new THREE.Scene() */
 /* scene.background = new THREE.Color("#e8f4f8") */
 
-const viewerContainer = document.getElementById("viewer-container") as HTMLElement
+/* const viewerContainer = document.getElementById("viewer-container") as HTMLElement
 
 const camera = new THREE.PerspectiveCamera(75)
 camera.position.z = 5
@@ -123,13 +124,13 @@ function resizeViewer() {
 
 window.addEventListener("resize", resizeViewer)
 
-resizeViewer();
+resizeViewer(); */
 
 const boxGeometry = new THREE.BoxGeometry();
 const material = new THREE.MeshStandardMaterial()
 const cube = new THREE.Mesh(boxGeometry, material)
 
-const directionalLight = new THREE.DirectionalLight()
+/* const directionalLight = new THREE.DirectionalLight()
 const ambientLight = new THREE.AmbientLight()
 ambientLight.intensity = 0.4
 
@@ -150,9 +151,9 @@ grid.material.opacity = 0.4;
 grid.material.color = new THREE.Color("808080");
 scene.add( axes, grid );
 
-const gui = new GUI()
+const gui = new GUI() */
 /* gui.close() */
-gui.title("Scene Controls")
+/* gui.title("Scene Controls")
 
 const cubeControls = gui.addFolder("Cube")
 cubeControls.add( cube.position, "x", -10, 10, 1)
@@ -173,7 +174,7 @@ spotLightControls.add( spotLight.position, "y", -10, 10, 0.1);
 spotLightControls.add( spotLight.position, "z", -10, 10, 0.1);
 spotLightControls.add(spotLight, "visible");
 spotLightControls.addColor(spotLight, "color");
-spotLightControls.add( spotLight, "intensity", 0, 1, 0.1);
+spotLightControls.add( spotLight, "intensity", 0, 10, 0.1);
 
 
 const helperLight = new THREE.DirectionalLightHelper( directionalLight, 5 );
@@ -185,7 +186,7 @@ lightingControls.add( directionalLight.position, "y", -10, 10, 0.1)
 lightingControls.add( directionalLight.position, "z", -10, 10, 0.1)
 lightingControls.add(directionalLight, "visible")
 lightingControls.addColor( directionalLight, "color");
-lightingControls.add( directionalLight, "intensity", 0, 1, 0.1)
+lightingControls.add( directionalLight, "intensity", 0, 10, 0.1)
 
 function renderLight() {
   directionalLight.target.position.x = 0;
@@ -211,3 +212,24 @@ mtlLoader.load("assets/Gear/Gear/Gear1.mtl", (materials) => {
   }
 })
 
+ */
+
+const viewer = new OBC.Components();
+
+const sceneComponent = new OBC.SimpleScene(viewer);
+viewer.scene = sceneComponent;
+const scene = sceneComponent.get();
+sceneComponent.setup();
+scene.background = null;
+
+const viewerContainer = document.getElementById("viewer-container") as HTMLDivElement;
+const rendererComponent = new OBC.SimpleRenderer(viewer, viewerContainer)
+viewer.renderer = rendererComponent;
+
+const cameraComponent = new OBC.OrthoPerspectiveCamera(viewer);
+viewer.camera = cameraComponent;
+
+viewer.init()
+cameraComponent.updateAspect()
+
+scene.add(cube)
