@@ -6,6 +6,7 @@ import { ProjectsManager } from "./classes/ProjectsManager";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 import * as OBC from "openbim-components";
+import { triplanarTexture } from "three/examples/jsm/nodes/Nodes.js";
 
 function toggleModal(id: string) {
   const modal = document.getElementById(id);
@@ -102,118 +103,7 @@ if (importProjectBtn) {
   })
 }
 
-//ThreeJS Viewer
-/* const scene = new THREE.Scene() */
-/* scene.background = new THREE.Color("#e8f4f8") */
-
-/* const viewerContainer = document.getElementById("viewer-container") as HTMLElement
-
-const camera = new THREE.PerspectiveCamera(75)
-camera.position.z = 5
-
-const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true})
-viewerContainer.append(renderer.domElement)
-
-function resizeViewer() {
-  const containerDimensions = viewerContainer.getBoundingClientRect()
-  renderer.setSize(containerDimensions.width , containerDimensions.height)
-  const aspectRatio = containerDimensions.width / containerDimensions.height
-  camera.aspect = aspectRatio
-  camera.updateProjectionMatrix()
-}
-
-window.addEventListener("resize", resizeViewer)
-
-resizeViewer(); */
-
-const boxGeometry = new THREE.BoxGeometry();
-const material = new THREE.MeshStandardMaterial()
-const cube = new THREE.Mesh(boxGeometry, material)
-
-/* const directionalLight = new THREE.DirectionalLight()
-const ambientLight = new THREE.AmbientLight()
-ambientLight.intensity = 0.4
-
-scene.add( directionalLight, ambientLight)
-
-const cameraControls = new OrbitControls(camera, viewerContainer) 
-
-function renderScene() {
-  renderer.render(scene, camera)
-  requestAnimationFrame(renderScene)
-}
-renderScene();
-
-const axes = new THREE.AxesHelper( );
-const grid = new THREE.GridHelper( );
-grid.material.transparent = true;
-grid.material.opacity = 0.4;
-grid.material.color = new THREE.Color("808080");
-scene.add( axes, grid );
-
-const gui = new GUI() */
-/* gui.close() */
-/* gui.title("Scene Controls")
-
-const cubeControls = gui.addFolder("Cube")
-cubeControls.add( cube.position, "x", -10, 10, 1)
-cubeControls.add( cube.position, "y", -10, 10, 1)
-cubeControls.add( cube.position, "z", -10, 10, 1)
-cubeControls.add( cube, "visible")
-cubeControls.addColor( cube.material, "color")
-
-const spotLight = new THREE.SpotLight( 0xffffff );
-scene.add(spotLight);
-spotLight.position.set( 10, 10, 10 );
-const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-scene.add( spotLightHelper );
-
-const  spotLightControls = gui.addFolder("Spot Light");
-spotLightControls.add( spotLight.position, "x", -10, 10, 0.1);
-spotLightControls.add( spotLight.position, "y", -10, 10, 0.1);
-spotLightControls.add( spotLight.position, "z", -10, 10, 0.1);
-spotLightControls.add(spotLight, "visible");
-spotLightControls.addColor(spotLight, "color");
-spotLightControls.add( spotLight, "intensity", 0, 10, 0.1);
-
-
-const helperLight = new THREE.DirectionalLightHelper( directionalLight, 5 );
-scene.add( helperLight );
-
-const  lightingControls = gui.addFolder("Light");
-lightingControls.add( directionalLight.position, "x", -10, 10, 0.1)
-lightingControls.add( directionalLight.position, "y", -10, 10, 0.1)
-lightingControls.add( directionalLight.position, "z", -10, 10, 0.1)
-lightingControls.add(directionalLight, "visible")
-lightingControls.addColor( directionalLight, "color");
-lightingControls.add( directionalLight, "intensity", 0, 10, 0.1)
-
-function renderLight() {
-  directionalLight.target.position.x = 0;
-  directionalLight.target.position.y = 0;
-  directionalLight.target.position.z = 0;
-  helperLight.update()
-  renderer.render (scene, camera)
-  requestAnimationFrame(renderLight)
-}
-
-renderLight()
-
-const objLoader = new OBJLoader();
-const mtlLoader = new MTLLoader();
-
-mtlLoader.load("assets/Gear/Gear/Gear1.mtl", (materials) => {
-  materials.preload()
-  objLoader.setMaterials(materials)
-  objLoader.load("../assets/Gear/Gear/Gear1.obj", (mesh) => {
-    scene.add(mesh)
-  }), undefined, (error) => {
-    console.log('Error loading obj model: ', error);
-  }
-})
-
- */
-
+//OpenBIM-Compnent Viewer
 const viewer = new OBC.Components();
 
 const sceneComponent = new OBC.SimpleScene(viewer);
@@ -232,4 +122,15 @@ viewer.camera = cameraComponent;
 viewer.init()
 cameraComponent.updateAspect()
 
-scene.add(cube)
+const ifcLoader = new OBC.FragmentIfcLoader(viewer)
+ifcLoader.settings.wasm = {
+  path: "https://unpkg.com/web-ifc@0.0.43/",
+  absolute: true
+}
+
+const toolbar = new OBC.Toolbar(viewer)
+toolbar.addChild(
+  ifcLoader.uiElement.get("main")
+)
+
+viewer.ui.addToolbar(toolbar)
