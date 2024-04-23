@@ -3,6 +3,8 @@ import { GUI } from "three/examples/jsm/libs/lil-gui.module.min"
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import { IProject, ProjectStatus, UserRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader";
 
 function toggleModal(id: string) {
   const modal = document.getElementById(id);
@@ -131,7 +133,7 @@ const directionalLight = new THREE.DirectionalLight()
 const ambientLight = new THREE.AmbientLight()
 ambientLight.intensity = 0.4
 
-scene.add(cube, directionalLight, ambientLight)
+scene.add( directionalLight, ambientLight)
 
 const cameraControls = new OrbitControls(camera, viewerContainer) 
 
@@ -159,9 +161,23 @@ cubeControls.add( cube.position, "z", -10, 10, 1)
 cubeControls.add( cube, "visible")
 cubeControls.addColor( cube.material, "color")
 
-const targetObject = new THREE.Object3D();
+const spotLight = new THREE.SpotLight( 0xffffff );
+scene.add(spotLight);
+spotLight.position.set( 10, 10, 10 );
+const spotLightHelper = new THREE.SpotLightHelper( spotLight );
+scene.add( spotLightHelper );
+
+const  spotLightControls = gui.addFolder("Spot Light");
+spotLightControls.add( spotLight.position, "x", -10, 10, 0.1);
+spotLightControls.add( spotLight.position, "y", -10, 10, 0.1);
+spotLightControls.add( spotLight.position, "z", -10, 10, 0.1);
+spotLightControls.add(spotLight, "visible");
+spotLightControls.addColor(spotLight, "color");
+spotLightControls.add( spotLight, "intensity", 0, 1, 0.1);
+
+
 const helperLight = new THREE.DirectionalLightHelper( directionalLight, 5 );
-scene.add( helperLight, targetObject );
+scene.add( helperLight );
 
 const  lightingControls = gui.addFolder("Light");
 lightingControls.add( directionalLight.position, "x", -10, 10, 0.1)
@@ -171,7 +187,6 @@ lightingControls.add(directionalLight, "visible")
 lightingControls.addColor( directionalLight, "color");
 lightingControls.add( directionalLight, "intensity", 0, 1, 0.1)
 
-/* this code below doesnt work{ */
 function renderLight() {
   directionalLight.target.position.x = 0;
   directionalLight.target.position.y = 0;
@@ -180,4 +195,19 @@ function renderLight() {
   renderer.render (scene, camera)
   requestAnimationFrame(renderLight)
 }
+
 renderLight()
+
+const objLoader = new OBJLoader();
+const mtlLoader = new MTLLoader();
+
+mtlLoader.load("assets/Gear/Gear/Gear1.mtl", (materials) => {
+  materials.preload()
+  objLoader.setMaterials(materials)
+  objLoader.load("../assets/Gear/Gear/Gear1.obj", (mesh) => {
+    scene.add(mesh)
+  }), undefined, (error) => {
+    console.log('Error loading obj model: ', error);
+  }
+})
+
