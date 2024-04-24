@@ -113,20 +113,31 @@ sceneComponent.setup();
 scene.background = null;
 
 const viewerContainer = document.getElementById("viewer-container") as HTMLDivElement;
-const rendererComponent = new OBC.SimpleRenderer(viewer, viewerContainer)
+const rendererComponent = new OBC.PostproductionRenderer(viewer, viewerContainer)
 viewer.renderer = rendererComponent;
 
 const cameraComponent = new OBC.OrthoPerspectiveCamera(viewer);
 viewer.camera = cameraComponent;
 
+const raycasterComponent = new OBC.SimpleRaycaster(viewer);
+viewer.raycaster = raycasterComponent;
+
 viewer.init()
 cameraComponent.updateAspect()
+rendererComponent.postproduction.enabled = true
 
 const ifcLoader = new OBC.FragmentIfcLoader(viewer)
 ifcLoader.settings.wasm = {
   path: "https://unpkg.com/web-ifc@0.0.43/",
   absolute: true
 }
+
+const highlighter = new OBC.FragmentHighlighter(viewer)
+highlighter.setup()
+
+ifcLoader.onIfcLoaded.add((model)=> {
+  highlighter.update()
+})
 
 const toolbar = new OBC.Toolbar(viewer)
 toolbar.addChild(
