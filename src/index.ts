@@ -1,5 +1,6 @@
 import * as THREE from "three"
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min"
+import { FragmentsGroup } from "bim-fragment";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import { IProject, ProjectStatus, UserRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
@@ -126,6 +127,18 @@ viewer.init()
 cameraComponent.updateAspect()
 rendererComponent.postproduction.enabled = true
 
+const fragmentManager = new OBC.FragmentManager(viewer);
+function exportFragments(model: FragmentsGroup) {
+  const fragmentBinary = fragmentManager.export(model)
+        const blob = new Blob([fragmentBinary])
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = `${model.name.replace(".ifc", "")}.frag`
+        a.click()
+        URL.revokeObjectURL(url)
+}
+
 const ifcLoader = new OBC.FragmentIfcLoader(viewer)
 ifcLoader.settings.wasm = {
   path: "https://unpkg.com/web-ifc@0.0.43/",
@@ -168,7 +181,9 @@ const fragmentTree = new OBC.FragmentTree(viewer)
 }
 
 ifcLoader.onIfcLoaded.add(async(model)=> {
+  exportFragments(model)
   highlighter.update()
+
   classifier.byStorey(model)
   classifier.byEntity(model)
   console.log(classifier.get())
