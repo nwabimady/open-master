@@ -1,6 +1,6 @@
 import * as THREE from "three"
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min"
-import { FragmentsGroup } from "bim-fragment";
+import { Fragment, FragmentsGroup } from "bim-fragment";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 import { IProject, ProjectStatus, UserRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
@@ -180,29 +180,69 @@ const fragmentTree = new OBC.FragmentTree(viewer)
   return tree
 }
 
-ifcLoader.onIfcLoaded.add(async(model)=> {
-  exportFragments(model)
+async function onModelLoaded(model: Fragment) {
   highlighter.update()
 
-  classifier.byStorey(model)
-  classifier.byEntity(model)
-  console.log(classifier.get())
-  const tree = await createModelTree()
-  classificationWindow.slots.content.dispose(true)
- classificationWindow.addChild(tree)
+  try {
 
- propertiesProcessor.process(model)
- highlighter.events.select.onHighlight.add((fragmentMap) => {
- const expressID = [...Object.values(fragmentMap)[0]][0]
- propertiesProcessor.renderProperties(model, Number(expressID))
+    classifier.byStorey(model)
+    classifier.byEntity(model)
+    console.log(classifier.get())
+    const tree = await createModelTree()
+    classificationWindow.slots.content.dispose(true)
+   classificationWindow.addChild(tree)
+  
+   propertiesProcessor.process(model)
+   highlighter.events.select.onHighlight.add((fragmentMap) => {
+   const expressID = [...Object.values(fragmentMap)[0]][0]
+   propertiesProcessor.renderProperties(model, Number(expressID))
+  })
+  
+  } catch (error) {
+    alert(error)
+  }
+
+  
+}
+
+ifcLoader.onIfcLoaded.add(async(model)=> {
+  exportFragments(model)
+  onModelLoaded(model)
 })
+
+fragmentManager.onFragmentsLoaded.add((model) => {
+  model.properties = {}  // Get this from a JSOn file exported from the IFC first load.
+  onModelLoaded(model)
 })
 
+const importFragmentBtn = new OBC.Button(viewer)
+importFragmentBtn.materialIcon = "upload"
+importFragmentBtn.tooltip = "Load FRAG" 
 
+importFragmentBtn.onClick.add(() => {
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = '.frag'
+  const reader = new FileReader()
+  reader.addEventListener("load", async () => {
+      const binary = reader.result
+      if (!(binary instanceof ArrayBuffer)) { return }
+      const fragmentBinary = new Uint8Array(binary)
+      await fragmentManager.load(fragmentBinary)
+  })
+  input.addEventListener('change', () => {
+      const filesList = input.files
+      if (!filesList) { return }
+      reader.readAsArrayBuffer(filesList[0])
+  })
+  input.click()
+}
+)
 
 const toolbar = new OBC.Toolbar(viewer)
 toolbar.addChild(
   ifcLoader.uiElement.get("main"),
+  importFragmentBtn,
   classificationBtn,
   propertiesProcessor.uiElement.get("main")
 )
