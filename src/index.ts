@@ -135,8 +135,33 @@ ifcLoader.settings.wasm = {
 const highlighter = new OBC.FragmentHighlighter(viewer)
 highlighter.setup()
 
-ifcLoader.onIfcLoaded.add((model)=> {
+const classifier = new OBC.FragmentClassifier(viewer)
+const classificationWindow = new OBC.FloatingWindow(viewer)
+viewer.ui.add(classificationWindow)
+classificationWindow.title = "Model Groups"
+
+async function createModelTree() {
+const fragmentTree = new OBC.FragmentTree(viewer)
+  await fragmentTree.init()
+  await fragmentTree.update(["storeys","entities"])
+  fragmentTree.onHovered.add((fragmentMap) => {
+    highlighter.highlightByID("hover", fragmentMap)
+  })
+  fragmentTree.onSelected.add((fragmentMap) => {
+    highlighter.highlightByID("select", fragmentMap)
+  })
+  const tree = fragmentTree.get().uiElement.get("tree")
+  return tree
+}
+
+ifcLoader.onIfcLoaded.add(async(model)=> {
   highlighter.update()
+  classifier.byStorey(model)
+  classifier.byEntity(model)
+  console.log(classifier.get())
+  const tree = await createModelTree()
+  classificationWindow.slots.content.dispose(true)
+ classificationWindow.addChild(tree)
 })
 
 const toolbar = new OBC.Toolbar(viewer)

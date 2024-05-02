@@ -65,9 +65,7 @@ span {
     padding: 10px;
 }
 
-#nav-buttons {
 
-}
 
 #nav-buttons div {
  list-style-type: none;
@@ -85,11 +83,7 @@ span {
     transition: var(--transition-hover);
 }
 
-/*Content styles*/
 
-#content {
-    
-}
 
 header {
     padding:  30px 40px;
