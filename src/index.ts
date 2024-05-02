@@ -148,8 +148,7 @@ const fragmentTree = new OBC.FragmentTree(viewer)
     highlighter.highlightByID("hover", fragmentMap)
   })
   fragmentTree.onSelected.add((fragmentMap) => {
-    highlighter.highlightByID("select", fragmentMap)
-  })
+    highlighter.highlightByID("select", fragmentMap)y})
   const tree = fragmentTree.get().uiElement.get("tree")
   return tree
 }
