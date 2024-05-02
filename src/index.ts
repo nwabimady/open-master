@@ -201,9 +201,25 @@ async function onModelLoaded(model: Fragment) {
   } catch (error) {
     alert(error)
   }
-
-  
 }
+function importPropertiesJSON(model: FragmentsGroup) {
+  const input = document.createElement('input')
+        input.type = 'file'
+        input.accept = 'application/json'
+        const reader = new FileReader()
+        reader.addEventListener("load", () => {
+            const json = reader.result
+            if (!json) { return }
+            model.properties = JSON.parse(json as string)
+        })
+        input.addEventListener('change', () => {
+            const filesList = input.files
+            if (!filesList) { return }
+            reader.readAsText(filesList[0])
+        })
+        input.click()
+    };
+
 
 ifcLoader.onIfcLoaded.add(async(model)=> {
   exportFragments(model)
@@ -211,6 +227,7 @@ ifcLoader.onIfcLoaded.add(async(model)=> {
 })
 
 fragmentManager.onFragmentsLoaded.add((model) => {
+  importPropertiesJSON(model)
   model.properties = {}  // Get this from a JSOn file exported from the IFC first load.
   onModelLoaded(model)
 })
